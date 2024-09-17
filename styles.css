@@ -11,7 +11,7 @@
 .leftBox{
     padding: 40px;
     width: 33%;
-    height: 800px;
+    height: 100vh;
     float: left;
     background-color: rgb(50, 59, 76);
     color: aliceblue;
@@ -19,6 +19,6 @@
 .rightBox{
     margin-right: 40px; margin-left: 40px;
     overflow: auto;
-    height: 800px;
+    height: 100hv;
     padding: 40px;
 }
