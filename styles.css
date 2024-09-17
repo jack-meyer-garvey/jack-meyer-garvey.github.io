@@ -22,3 +22,8 @@
     height: 100hv;
     padding: 40px;
 }
+
+.sectionHeader{
+    font-size: xx-large;
+    font-weight: bolder;
+}
