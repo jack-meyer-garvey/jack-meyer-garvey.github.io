@@ -9,18 +9,27 @@
 }
 
 .leftBox{
-    padding: 40px;
-    width: 25%;
-    height: 100%;
+    padding: 2%;
+    overflow: hidden;
+    width: 28%;
     float: left;
     background-color: rgb(50, 59, 76);
     color: aliceblue;
 }
+
+.leftBox hr {
+    margin-right: -10%;
+}
+
 .rightBox{
-    margin-right: 40px; margin-left: 40px;
-    overflow: auto;
-    height: 100%;
-    padding: 40px;
+    width: 75%;
+    float: right;
+    padding-left: 2%;
+    overflow: hidden;
+}
+
+.rightBox hr {
+    margin-left: -10%;
 }
 
 .sectionHeader{
@@ -33,6 +42,8 @@
     color: aliceblue;
     text-decoration: none;
     background-color: none;
+    font-weight: bolder;
+    font-size: large
 }
 
 .leftLinkText:hover {
@@ -41,4 +52,25 @@
 
 a {
     text-decoration: none;
+}
+
+.footer {
+    overflow: auto;
+    bottom: 0%;
+    padding: 1%;
+}
+
+.footer hr {
+    margin-left: -1%;
+}
+
+.rightLinkText{
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    text-decoration: none;
+    background-color: none;
+}
+
+.rightLinkText:hover {
+    text-decoration: underline;
 }
