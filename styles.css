@@ -11,7 +11,7 @@
 .leftBox{
     padding: 2%;
     overflow: hidden;
-    width: 28%;
+    width: 26%;
     float: left;
     background-color: rgb(50, 59, 76);
     color: aliceblue;
@@ -22,9 +22,10 @@
 }
 
 .rightBox{
-    width: 75%;
+    width: 68%;
     float: right;
     padding-left: 2%;
+    padding-right: 2%;
     overflow: hidden;
 }
 
