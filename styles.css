@@ -10,7 +10,8 @@
 
 .leftBox{
     padding: 2%;
-    overflow: hidden;
+    box-sizing: border-box;
+    overflow: visible;
     width: 26%;
     float: left;
     background-color: rgb(50, 59, 76);
@@ -26,7 +27,12 @@
     float: right;
     padding-left: 2%;
     padding-right: 2%;
-    overflow: hidden;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .rightBox hr {
@@ -74,4 +80,421 @@ a {
 
 .rightLinkText:hover {
     text-decoration: underline;
+}
+/* ============================================================
+   Full-height layout shell
+   ============================================================ */
+
+html, body {
+    height: auto;
+}
+
+.layout {
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+.rightBox {
+    flex: 1 1 auto;
+}
+
+/* ============================================================
+   Searchable CV  —  clean list, collapsible sections, summaries
+   ============================================================ */
+
+.isHidden { display: none !important; }
+
+:root {
+    --slate: rgb(50, 59, 76);
+    --hover: rgba(50, 59, 76, 0.07);
+    --hover-strong: rgba(50, 59, 76, 0.11);
+    --hairline: rgba(50, 59, 76, 0.18);
+    --muted: rgb(120, 120, 120);
+}
+
+/* ---- name moved into the sidebar (under the photo) ---- */
+.leftName {
+    text-align: center;
+    color: aliceblue;
+    font-weight: bold;
+    font-size: 1.7rem;
+    line-height: 1.15;
+    margin: 0.1rem 0 0.15rem;
+}
+.leftSubtitle {
+    text-align: center;
+    color: aliceblue;
+    font-weight: 300;
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 0.6rem;
+}
+
+/* ---- search box: sticky, no divider underneath ---- */
+.cvControls {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: #fff;
+    padding: 0.6rem 0 0.7rem;
+    margin-bottom: 0.5rem;
+    transition: padding-left 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cvSearchWrap { position: relative; }
+.cvSearchInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.85rem 2.6rem 0.85rem 1.1rem;
+    font: inherit;
+    font-size: 1.15rem;
+    color: var(--slate);
+    border: 1.5px solid var(--hairline);
+    border-radius: 0.7rem;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.cvSearchInput::placeholder { color: var(--muted); }
+.cvSearchInput:focus { border-color: var(--slate); box-shadow: 0 0 0 3px var(--hover); }
+
+.cvClear {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+.cvClear:hover { color: var(--slate); }
+.cvSearchInput:placeholder-shown ~ .cvClear { opacity: 0; pointer-events: none; }
+
+.cvAuto {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0; right: 0;
+    z-index: 50;
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 0.6rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+.cvAutoItem {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    font: inherit;
+    color: var(--slate);
+    padding: 0.5rem 0.9rem;
+    cursor: pointer;
+}
+.cvAutoItem:hover { background: var(--hover); }
+
+/* ---- collapsible macro sections ---- */
+.cvSection { margin-bottom: 1.4rem; }
+
+.cvSectionHeader {           /* clickable header, no icon — hover highlight only */
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+    padding: 0.1rem 0.4rem;
+    margin: 0 0 0.1rem -0.4rem;
+    border-radius: 0.4rem;
+    transition: background 0.12s ease;
+}
+.cvSectionHeader:hover { background: var(--hover); }
+
+/* keep the section rule inside the right column (override .rightBox hr) */
+.cvSection > hr { margin-left: 0; margin-right: 0; margin-bottom: 0.3rem; }
+
+.cvSectionBody {             /* animates open/closed */
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s ease;
+}
+.cvSection.open .cvSectionBody { grid-template-rows: 1fr; }
+.cvSectionBody > .cvItems { overflow: hidden; }
+
+/* ---- rows: no bullet, title + optional summary, meta on the right ---- */
+.cvItemHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    padding: 0.4rem 0.55rem;
+    border-radius: 0.4rem;
+    transition: background 0.12s ease;
+}
+.cvItemHeader:hover { background: var(--hover); }
+.cvItem.open > .cvItemHeader { background: var(--hover-strong); }
+
+.cvItemMain { display: flex; flex-direction: column; gap: 0.05rem; min-width: 0; }
+.cvItemTitle { font-weight: 600; }
+.cvItemSummary { color: var(--muted); font-weight: 300; font-size: 0.9rem; line-height: 1.35; }
+.cvItemMeta {
+    margin-left: auto;
+    padding-left: 1rem;
+    color: var(--muted);
+    font-weight: 300;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* expansion: indented plain text, no card */
+.cvItemBody {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.25s ease;
+}
+.cvItem.open .cvItemBody { grid-template-rows: 1fr; }
+.cvItemBodyInner { overflow: hidden; }
+.cvItem.open .cvItemBodyInner { padding: 0.25rem 0.6rem 0.85rem 0.6rem; }
+
+.cvDescription { font-weight: 300; line-height: 1.55; color: rgb(40, 40, 40); }
+.cvDescription p { margin: 0.45rem 0; }
+.cvDescription ol, .cvDescription ul { margin: 0.45rem 0 0.45rem 1.25rem; }
+.cvDescription a { color: var(--slate); text-decoration: underline; }
+
+/* keywords: subtle inline clickable text */
+.cvChips { margin-top: 0.7rem; font-size: 0.82rem; color: var(--muted); }
+.cvChipsLabel { font-weight: 600; margin-right: 0.4rem; }
+.cvChipsLabel::after { content: ":"; }
+.cvChip { border: none; background: none; padding: 0; font: inherit; color: var(--slate); cursor: pointer; }
+.cvChip:hover { text-decoration: underline; }
+.cvChip:not(:last-child)::after { content: " · "; color: var(--muted); }
+
+mark { background: #ffe680; color: inherit; border-radius: 2px; padding: 0 1px; }
+
+.cvNoResults { color: var(--muted); padding: 0.5rem 0.55rem; }
+/* ============================================================
+   View tabs + curated Overview page
+   ============================================================ */
+
+/* ---- tabs (NOT sticky: they scroll away with the content) ---- */
+.cvTabs {
+    display: flex;
+    gap: 0.25rem;
+    border-bottom: 1.5px solid var(--hairline);
+    margin: 0.5rem 0 1.3rem;
+}
+.cvTab {
+    appearance: none;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 0.55rem 0.95rem;
+    cursor: pointer;
+    border-bottom: 2.5px solid transparent;
+    margin-bottom: -1.5px;            /* sit on the rule */
+    border-radius: 0.4rem 0.4rem 0 0;
+    transition: color 0.15s ease, background 0.12s ease, border-color 0.15s ease;
+}
+.cvTab:hover { color: var(--slate); background: var(--hover); }
+.cvTab[aria-selected="true"] {
+    color: var(--slate);
+    border-bottom-color: var(--slate);
+}
+.cvTab:focus-visible { outline: 2px solid var(--slate); outline-offset: 2px; }
+
+
+/* ---- view fade (applies to both panels) ---- */
+.cvView { animation: cvFade 0.2s ease; }
+@keyframes cvFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ============================================================
+   Overview = an academic CV document (serif, classic layout).
+   Scoped to #overviewPanel so the tabs/Explore chrome stay sans.
+   ============================================================ */
+.cvDoc {
+    font-family: "Times New Roman", Times, Georgia, serif;
+    color: #1a1a1a;
+}
+.cvDocInner {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 0.4rem 0 2.5rem;
+}
+
+/* document title */
+.cvDocTitle {
+    text-align: center;
+    font-size: 1.55rem;
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    color: var(--slate);
+    margin: 0.2rem 0 1.5rem;
+}
+
+/* section headers: small-caps-ish caps with a rule beneath (classic CV) */
+.cvDocHead {
+    font-family: "Times New Roman", Times, Georgia, serif;
+    font-size: 1.12rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--slate);
+    margin: 1.7rem 0 0.45rem;
+    padding-bottom: 0.22rem;
+    border-bottom: 1px solid var(--slate);
+}
+.cvDocHead:first-of-type { margin-top: 0; }
+
+.cvDocBlock { margin: 0.4rem 0 0.5rem; }
+
+/* entries: title left, italic date right, justified serif body */
+.cvEntry { margin: 0.65rem 0; }
+.cvEntryHead { display: flex; align-items: baseline; gap: 1rem; }
+.cvEntryTitle { font-weight: 700; font-size: 1.03rem; line-height: 1.3; }
+.cvEntryDate {
+    margin-left: auto;
+    white-space: nowrap;
+    font-style: italic;
+    color: #444;
+    font-size: 0.95rem;
+}
+.cvEntryBody {
+    margin: 0.18rem 0 0;
+    line-height: 1.5;
+    font-size: 1rem;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* coursework: two-column dated list with dotted leaders */
+.cvCourseList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2.4rem;
+    row-gap: 0;
+}
+.cvTeachList { max-width: 30rem; }
+.cvCourse {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px dotted rgba(50, 59, 76, 0.32);
+}
+.cvCourseName { font-weight: 600; }
+.cvCourseMeta {
+    color: #444;
+    font-style: italic;
+    font-size: 0.92rem;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.cvTeachLede { margin: 0.45rem 0 0.65rem; }
+
+@media (max-width: 760px) {
+    .cvCourseList { grid-template-columns: 1fr; }
+}
+/* ============================================================
+   My Hobbies = a plain, standard content page for prose + images.
+   Sans-serif, single readable column. Edit the markup in
+   #hobbiesPanel freely; the classes below style it.
+   ============================================================ */
+.hobbies { color: rgb(40, 40, 40); }
+
+.hbPage {
+    max-width: 55rem;          /* same comfortable column width as the CV */
+    margin: 0 auto;
+}
+
+.hbHeading {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--slate);
+    margin: 0.2rem 0 0.6rem;
+}
+.hbSection {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--slate);
+    margin: 1.9rem 0 0.5rem;
+    clear: both;               /* always starts below any floated image */
+}
+.hbLede {
+    font-size: 1.15rem;
+    color: var(--slate);
+    margin: 0.2rem 0 1.3rem;
+}
+.hbBody {
+    line-height: 1.65;
+    font-weight: 300;
+    font-size: 1.02rem;
+    margin: 0 0 1rem;
+}
+
+/* images: responsive, optional caption */
+.hbFigure { margin: 1.3rem 0; }
+.hbFigure img {
+    display: block;
+    width: 300px;
+    height: auto;
+    border-radius: 0.6rem;
+    border: 1px solid var(--hairline);
+}
+.hbFigure figcaption {
+    margin-top: 0.45rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+/* two (or more) images side by side; stacks on narrow screens */
+.hbImageRow {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.3rem 0;
+}
+.hbImageRow > .hbFigure { flex: 1 1 0; min-width: 12rem; margin: 0; }
+
+/* optional: float an image beside text */
+.hbFigure.hbLeft  { float: left;  width: 16rem; margin: 0.3rem 1.3rem 0.9rem 0; }
+.hbFigure.hbRight { float: right; width: 16rem; margin: 0.3rem 0 0.9rem 1.3rem; }
+
+@media (max-width: 760px) {
+    .hbImageRow { flex-direction: column; }
+    .hbFigure.hbLeft, .hbFigure.hbRight { float: none; width: 100%; margin: 1.3rem 0; }
+}
+
+/* text on the left, image on the right — side by side, independent columns */
+.hbSplit {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin: 1.3rem 0;
+}
+.hbSplit .hbText { flex: 1 1 auto; min-width: 0; }   /* the left text column */
+.hbSplit .hbText > :first-child { margin-top: 0; }   /* align top with the image */
+.hbSplit .hbFigure { flex: 0 0 1.3rem; margin: 0; }   /* the right image column */
+
+@media (max-width: 760px) {
+    .hbSplit { flex-direction: column; }             /* stacks on narrow screens */
+    .hbSplit .hbFigure { flex-basis: auto; }
 }
