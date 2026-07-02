@@ -22,7 +22,7 @@
 const SECTIONS = [
   { id: "projects",   label: "Research & Projects" },
   { id: "courses",    label: "Courses Taken" },
-  { id: "teaching",   label: "Courses Taught" },
+  { id: "teaching",   label: "Teaching Experience" },
   { id: "employment", label: "Employment" },
   { id: "leadership", label: "Leadership Positions" },
   { id: "awards",     label: "Awards" },
@@ -249,9 +249,9 @@ const ITEMS = [
       </figure>` },
 
   /* ---------------- Employment ---------------- */
-  { section:"employment", title:"Research Assistantship", meta:"2026 – Present", keywords:["teaching","graduate assistantship","research","Minnesota State University"], summary:"NSF-funded research in Mathematical Biology.",
+  { section:"employment", title:"Research Assistant", meta:"2026 – Present", keywords:["teaching","graduate assistantship","research","Minnesota State University"], summary:"NSF-funded research in Mathematical Biology.",
     description:"Research assistant for NSF-funded research in Mathematical Biology. Worked with Dr. Ruijun Zhao on mathematical models for population dynamics." },
-  { section:"employment", title:"Math Instructor — Graduate Assistantship", meta:"2025 – Present", keywords:["teaching","graduate assistantship","instructor","Minnesota State University"], summary:"Instructor at Minnesota State University.",
+  { section:"employment", title:"Math Instructor — Graduate Assistant", meta:"2025 – Present", keywords:["teaching","graduate assistantship","instructor","Minnesota State University"], summary:"Instructor at Minnesota State University.",
      description:"Instructor for undergraduate mathematics courses, including College Algebra, Trigonometry, and Pre-Calculus." },
   {
     section:"employment", title:"Math Corps, Spring Creek Elementary", meta:"2024 – 2025", summary:"Research-based math interventions and progress monitoring.",
@@ -343,7 +343,7 @@ const ITEMS = [
      description: "<p>I am a python expert. I have written multiple large projects in Python, including two video game engines, multiple websites, and countless homework assignments.</p>" },
   { section:"languages", title:"C++", summary:"For competitive programming.", keywords:["c++","programming"], description: "<p>I use C++ for competitive programming. Useful for precise algorithm implementation.</p>" },
   { section:"languages", title:"Isabelle/HOL", summary:"Preferred proof assistant.", keywords:["isabelle/hol","formal methods","software verification"], description:"<p>I use Isabelle/HOL for formal verification, including my work with Katherine Kosaian formalizing Coppersmith's Attack.</p>" },
-  { section:"languages", title:"HTML/CSS/JavaScript", summary:"I'm great at web development.", keywords:["html/css/javascript","web development"], description:"<p>I have built and maintained multiple websites using HTML, CSS, and JavaScript. Some for jobs and school, and some for personal projects.</p>" },
+  { section:"languages", title:"HTML/CSS/JavaScript", summary:"I enjoy making websites.", keywords:["html/css/javascript","web development"], description:"<p>I have built and maintained multiple websites using HTML, CSS, and JavaScript. Some for jobs and school, and some for personal projects.</p>" },
   { section:"languages", title:"LateX", summary:"Everyone should learn LateX", keywords:["LateX"], description:"<p>I use LateX daily for writing research papers, making presentations, and creating assignments for my classes. My hot take is we should teach LateX in highschool.</p>" },
   { section:"languages", title:"Autodesk Sketchbook", summary:"Underrated digital illustration tool.", keywords:["autodesk sketchbook","graphic design","art"], description:"<p>I use Autodesk Sketchbook for digital art and graphic design. I used it when I was an official artist on smogon, and also for general purpose poster making</p>" },
   { section:"languages", title:"Adobe Animate", summary:"2D animation.", keywords:["adobe animate","animation"], description:"<p>I use Adobe Animate for 2D animation. I used it to create animations for a Minneapolis-based non-profit organization.</p>" },
